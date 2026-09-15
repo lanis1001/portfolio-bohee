@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEAK A2A Sales 지표 분석 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutral Harmony -->
+    <!-- Application Structure Plan: A single-scroll interactive dashboard. The primary section features a dynamic radar chart controlled by sliders for all 6 sales metrics, allowing users to visually explore different lead profiles. This is followed by a 'Deep Dive' section with toggleable cards explaining the two new metrics ('Customer Fit' and 'Customer Engagement'), their scoring rubrics, and data requirements. The final section outlines the data strategy and implementation plan using a clear, card-based layout. This structure transforms the static report into a hands-on learning tool, prioritizing intuitive interaction and clear information hierarchy over the original report's linear format. -->
+    <!-- Visualization & Content Choices: 
+        1. Lead Profile Simulator: Report Info -> 6 core sales metrics. Goal -> Allow users to compare and understand the interplay of metrics. Viz/Presentation -> Interactive Radar Chart (Chart.js) controlled by 6 sliders. Interaction -> User adjusts sliders (1-100), chart and a summary text update in real-time. Justification -> The most direct way to make the report's central concept tangible and explorable.
+        2. New Metric Details: Report Info -> Scoring rubrics (Tables 1 & 2) and definitions for new metrics. Goal -> Inform users about the logic behind the new scores. Viz/Presentation -> Clean HTML tables and text within a toggleable card interface. Interaction -> Buttons to switch between 'Customer Fit' and 'Customer Engagement' views. Justification -> Prevents information overload and presents structured data clearly.
+        3. Implementation Plan: Report Info -> Data sources and action steps. Goal -> Organize and present a clear, actionable plan. Viz/Presentation -> Styled cards in a grid layout with Unicode icons (e.g., 📊, 📋). Interaction -> Static but visually segmented. Justification -> Breaks down complex text into digestible, visually appealing components.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0d9488;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .slider-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #d1d5db;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-teal-700">PEAK A2A Sales 지표 대시보드</h1>
+            <div class="space-x-4">
+                <a href="#simulator" class="text-gray-600 hover:text-teal-600">지표 시뮬레이터</a>
+                <a href="#deep-dive" class="text-gray-600 hover:text-teal-600">신규 지표 분석</a>
+                <a href="#strategy" class="text-gray-600 hover:text-teal-600">실행 계획</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="simulator" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">인터랙티브 지표 시뮬레이터</h2>
+                <p class="text-lg text-gray-600">슬라이더를 조절하여 각 지표의 변화가 잠재 고객 프로필에 미치는 영향을 실시간으로 확인해보세요.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                    <div class="chart-container">
+                        <canvas id="salesRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg space-y-4">
+                    <div id="sliders-container"></div>
+                    <div class="bg-teal-50 border-l-4 border-teal-500 text-teal-800 p-4 rounded-r-lg" role="alert">
+                        <p class="font-bold">프로필 요약</p>
+                        <p id="profile-summary">각 지표를 조절하여 프로필 요약을 확인하세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-gray-200">
+
+        <section id="deep-dive" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">신규 핵심 지표 심층 분석</h2>
+                <p class="text-lg text-gray-600">기존 4개 지표를 보완할 '고객 적합성'과 '고객 참여도'에 대해 자세히 알아보세요.</p>
+            </div>
+            
+            <div class="flex justify-center mb-6">
+                <div class="flex space-x-1 bg-gray-200 p-1 rounded-full">
+                    <button id="btn-fit" class="px-6 py-2 text-sm font-medium rounded-full bg-white text-teal-700 shadow">고객 적합성</button>
+                    <button id="btn-engagement" class="px-6 py-2 text-sm font-medium rounded-full bg-transparent text-gray-600">고객 참여도</button>
+                </div>
+            </div>
+            
+            <div id="metric-details-content">
+            </div>
+        </section>
+
+        <hr class="my-16 border-gray-200">
+
+        <section id="strategy" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">데이터 확보 및 실행 계획</h2>
+                <p class="text-lg text-gray-600">새로운 지표의 성공적인 도입을 위한 데이터 확보 전략과 다음 실행 단계를 확인하세요.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">📊</span>데이터 확보 전략 (크롤링 최소화)</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-teal-500 font-bold mr-3">1.</span>
+                            <div>
+                                <h4 class="font-semibold">내부 CRM 시스템 활용</h4>
+                                <p class="text-sm">영업 담당자가 고객 상호작용 후 산업, 문제점, 연락처 역할 등 주요 데이터를 CRM에 일관되게 기록하도록 교육합니다. 가장 신뢰도 높은 핵심 데이터 소스입니다.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-500 font-bold mr-3">2.</span>
+                            <div>
+                                <h4 class="font-semibold">영업 담당자의 정성적 평가</h4>
+                                <p class="text-sm">'내부 챔피언 수준'이나 '전략적 부합성' 등 미묘한 데이터는 담당자의 관찰과 판단을 통해 CRM 내 구조화된 필드에 기록합니다.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-teal-500 font-bold mr-3">3.</span>
+                            <div>
+                                <h4 class="font-semibold">공개 기업 정보 수동 조회</h4>
+                                <p class="text-sm">기업 웹사이트, LinkedIn 프로필 등을 통해 산업, 기업 규모 등 기본 정보를 수동으로 조회하여 보완합니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center"><span class="text-2xl mr-3">📋</span>실행 권고 (다음 단계)</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                             <span class="text-teal-500 font-bold mr-3">1.</span>
+                            <div>
+                                <h4 class="font-semibold">내부 워크숍 개최</h4>
+                                <p class="text-sm">영업팀과 함께 지표 정의 및 점수 산정 기준을 논의하고 세부적으로 조정합니다.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                             <span class="text-teal-500 font-bold mr-3">2.</span>
+                            <div>
+                                <h4 class="font-semibold">CRM 설정 및 교육</h4>
+                                <p class="text-sm">필요 데이터 수집을 위한 맞춤형 필드를 CRM에 생성하고, 팀에게 데이터 입력 교육을 제공합니다.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                             <span class="text-teal-500 font-bold mr-3">3.</span>
+                            <div>
+                                <h4 class="font-semibold">시범 운영 및 성과 모니터링</h4>
+                                <p class="text-sm">한 분기 동안 시범 운영하며 피드백을 수집하고, 영업 주기, 승률 등 성과를 분석하여 지표를 반복 개선합니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto p-6 text-center">
+            <p>&copy; 2025 더선한(주) PEAK A2A Sales. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const metrics = [
+                { id: 'urgency', name: '도입 시급성', value: 70 },
+                { id: 'companySize', name: '기업 규모', value: 60 },
+                { id: 'techFit', name: '기술 적합성', value: 85 },
+                { id: 'budget', name: '예산 규모', value: 50 },
+                { id: 'customerFit', name: '고객 적합성', value: 90 },
+                { id: 'engagement', name: '고객 참여도', value: 75 }
+            ];
+
+            const metricDetails = {
+                fit: {
+                    title: '고객 적합성 (Customer Fit)',
+                    description: '잠재 고객의 비즈니스, 전략적 목표, 당면 과제가 PEAK 서비스의 가치 제안과 얼마나 잘 부합하는지를 평가합니다. 이는 단순한 기술 호환성을 넘어, 전략적 필요성의 깊이와 상호 이익의 가능성을 종합적으로 측정합니다.',
+                    formula: '`고객 적합성 점수 = (가중치_산업 * 산업_적합성) + (가중치_문제점 * 문제점_관련성) + (가중치_전략 * 전략_부합성)`',
+                    table: [
+                        { range: '76-100', level: '우수', desc: 'PEAK 솔루션이 전략적 목표 달성의 핵심 동력. 장기 파트너십 잠재력 높음.' },
+                        { range: '51-75', level: '좋음', desc: '목표 산업과 일치, PEAK가 해결할 명확한 문제점 제시.' },
+                        { range: '26-50', level: '보통', desc: '일부 중복 있으나 PEAK가 핵심 우선순위는 아님. 설득 필요.' },
+                        { range: '1-25', level: '낮음', desc: '핵심 비즈니스/산업 불일치, PEAK가 해결할 명확한 문제 없음.' }
+                    ]
+                },
+                engagement: {
+                    title: '고객 참여도 (Customer Engagement)',
+                    description: '영업 프로세스 전반에 걸쳐 잠재 고객의 적극적인 참여, 응답성, 내부 추진력을 측정합니다. 이는 거래 성사 가능성과 영업 주기의 효율성을 예측하는 중요한 지표입니다.',
+                    formula: '`참여도 점수 = (가중치_상호작용 * 상호작용_빈도) + (가중치_응답성 * 응답성) + (가중치_챔피언 * 챔피언_수준)`',
+                    table: [
+                        { range: '76-100', level: '우수', desc: '매우 높은 응답성, 여러 의사결정권자 참여, 프로세스를 주도하는 내부 챔피언 존재.' },
+                        { range: '51-75', level: '좋음', desc: '응답성 좋고, 미팅에 적극적이며 명확한 내부 챔피언 식별.' },
+                        { range: '26-50', level: '보통', desc: '응답은 있으나 느림, 담당자는 있으나 명확한 챔피언은 아님.' },
+                        { range: '1-25', level: '낮음', desc: '비응답성, 미팅 일정 잡기 어려움, 내부 챔피언 부재.' }
+                    ]
+                }
+            };
+
+            const slidersContainer = document.getElementById('sliders-container');
+            metrics.forEach(metric => {
+                const sliderDiv = document.createElement('div');
+                sliderDiv.innerHTML = `
+                    <label for="${metric.id}" class="block text-sm font-medium text-gray-700">${metric.name}: <span id="${metric.id}-value" class="font-bold text-teal-600">${metric.value}</span></label>
+                    <input type="range" id="${metric.id}" name="${metric.id}" min="1" max="100" value="${metric.value}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-track">
+                `;
+                slidersContainer.appendChild(sliderDiv);
+                
+                const input = sliderDiv.querySelector('input');
+                input.addEventListener('input', (e) => {
+                    document.getElementById(`${metric.id}-value`).textContent = e.target.value;
+                    updateChart();
+                });
+            });
+
+            const ctx = document.getElementById('salesRadarChart').getContext('2d');
+            const salesRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: metrics.map(m => m.name),
+                    datasets: [{
+                        label: '잠재 고객 프로필',
+                        data: metrics.map(m => m.value),
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                        pointBackgroundColor: 'rgba(13, 148, 136, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(13, 148, 136, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#374151'
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                color: '#6b7280',
+                                stepSize: 25
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.r !== null) {
+                                        label += context.parsed.r;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            function updateChart() {
+                const newData = metrics.map(metric => {
+                    const slider = document.getElementById(metric.id);
+                    return slider ? slider.value : 0;
+                });
+                salesRadarChart.data.datasets[0].data = newData;
+                salesRadarChart.update();
+                updateProfileSummary(newData);
+            }
+
+            function updateProfileSummary(data) {
+                const [urgency, companySize, techFit, budget, customerFit, engagement] = data.map(Number);
+                const summaryEl = document.getElementById('profile-summary');
+                
+                if (customerFit > 75 && engagement > 75) {
+                    summaryEl.textContent = "최우선 순위 리드: 고객 적합성과 참여도가 매우 높아 즉각적인 영업 활동이 필요합니다.";
+                } else if (customerFit > 75 && engagement < 50) {
+                    summaryEl.textContent = "잠재력 높은 리드: 전략적 적합성은 높으나 참여도가 낮습니다. 가치 제안을 통해 재참여 유도 전략이 필요합니다.";
+                } else if (customerFit < 50 && engagement > 75) {
+                    summaryEl.textContent = "주의 필요한 리드: 참여도는 높지만 전략적 적합성이 낮습니다. 장기적인 가치를 신중히 평가해야 합니다.";
+                } else if (techFit < 50) {
+                    summaryEl.textContent = "기술 검토 필요: 다른 지표가 양호하더라도 기술 적합성이 낮아 도입에 장애가 될 수 있습니다. 기술팀의 검토가 우선되어야 합니다.";
+                } else {
+                    summaryEl.textContent = "일반 리드: 전반적인 지표가 보통 수준입니다. 추가적인 정보 수집을 통해 우선순위를 판단해야 합니다.";
+                }
+            }
+
+            const btnFit = document.getElementById('btn-fit');
+            const btnEngagement = document.getElementById('btn-engagement');
+            const contentContainer = document.getElementById('metric-details-content');
+
+            function renderMetricDetails(metricKey) {
+                const data = metricDetails[metricKey];
+                let tableHtml = data.table.map(row => `
+                    <tr class="border-b border-gray-200">
+                        <td class="p-3 text-sm font-mono text-center">${row.range}</td>
+                        <td class="p-3 font-semibold text-teal-700">${row.level}</td>
+                        <td class="p-3 text-sm text-gray-600">${row.desc}</td>
+                    </tr>
+                `).join('');
+
+                contentContainer.innerHTML = `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 ease-in-out">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-3">${data.title}</h3>
+                        <p class="text-gray-600 mb-6">${data.description}</p>
+                        <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                            <p class="text-sm text-gray-500 mb-1">개념 공식</p>
+                            <code class="text-sm text-gray-800">${data.formula}</code>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">점수 산정 기준</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full min-w-full text-left">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="p-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">점수 범위</th>
+                                        <th class="p-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">수준</th>
+                                        <th class="p-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">기준 설명</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            btnFit.addEventListener('click', () => {
+                renderMetricDetails('fit');
+                btnFit.classList.add('bg-white', 'text-teal-700', 'shadow');
+                btnFit.classList.remove('bg-transparent', 'text-gray-600');
+                btnEngagement.classList.add('bg-transparent', 'text-gray-600');
+                btnEngagement.classList.remove('bg-white', 'text-teal-700', 'shadow');
+            });
+
+            btnEngagement.addEventListener('click', () => {
+                renderMetricDetails('engagement');
+                btnEngagement.classList.add('bg-white', 'text-teal-700', 'shadow');
+                btnEngagement.classList.remove('bg-transparent', 'text-gray-600');
+                btnFit.classList.add('bg-transparent', 'text-gray-600');
+                btnFit.classList.remove('bg-white', 'text-teal-700', 'shadow');
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            updateProfileSummary(metrics.map(m => m.value));
+            renderMetricDetails('fit');
+        });
+    </script>
+</body>
+</html>

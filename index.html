@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이보희 포트폴리오 — 데이터 분석가</title>
+<meta name="description" content="B2B 영업을 도와주는 AI 서비스 PEAKRO에서 만든 '고객 추천 프로그램'이 1년 넘게 회사에서 쓰인 이야기를 담은 이보희의 포트폴리오입니다.">
+<meta property="og:title" content="이보희 포트폴리오 — 데이터 분석가">
+<meta property="og:description" content="제가 만든 프로그램이 실제로 채택되어, 지금도 회사에서 쓰이고 있어요 — PEAKRO 케이스 스터디">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='12,3 21,19 3,19' fill='%230E9488'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F5F6F4;
+    --surface:#FFFFFF;
+    --surface-2:#ECF0EE;
+    --ink:#12181A;
+    --ink-muted:#5B6668;
+    --ink-faint:#8B9694;
+    --border:#DCE3E0;
+    --accent:#0E9488;
+    --accent-ink:#FFFFFF;
+    --cat-1:#0E9488;   /* 기술 궁합 */
+    --cat-2:#C77A1F;   /* 담당자 확인 */
+    --cat-3:#6355C7;   /* 업종 확인 */
+    --shadow: 0 1px 2px rgba(18,24,26,.04), 0 8px 24px -12px rgba(18,24,26,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B1112;
+      --surface:#121A1B;
+      --surface-2:#182223;
+      --ink:#E7EEEC;
+      --ink-muted:#93A3A0;
+      --ink-faint:#5C6C69;
+      --border:#223030;
+      --accent:#29A896;
+      --accent-ink:#06110F;
+      --cat-1:#29A896;
+      --cat-2:#C6832F;
+      --cat-3:#8079D6;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B1112;
+    --surface:#121A1B;
+    --surface-2:#182223;
+    --ink:#E7EEEC;
+    --ink-muted:#93A3A0;
+    --ink-faint:#5C6C69;
+    --border:#223030;
+    --accent:#29A896;
+    --accent-ink:#06110F;
+    --cat-1:#29A896;
+    --cat-2:#C6832F;
+    --cat-3:#8079D6;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR","Noto Sans KR",-apple-system,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding-inline:20px;
+  }
+  h1,h2,h3{
+    font-weight:700;
+    text-wrap:balance;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  a{color:inherit;}
+  svg.ic{ display:block; }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:920px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:600;
+    font-size:.95rem;
+    white-space:nowrap;
+  }
+  .brand svg{width:20px;height:20px;flex:none;}
+  .navlinks{
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+  }
+  .navlinks a{
+    font-size:.82rem;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:7px 11px;
+    border-radius:999px;
+    transition:background .15s, color .15s;
+  }
+  .navlinks a:hover{background:var(--surface-2); color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 40px;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(1.6rem, 4vw, 2.3rem);
+    line-height:1.35;
+    max-width:18ch;
+  }
+  .hero p.sub{
+    margin-top:16px;
+    max-width:56ch;
+    color:var(--ink-muted);
+    font-size:1.02rem;
+    line-height:1.7;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:32px;
+    align-items:center;
+    margin-top:8px;
+  }
+  @media (max-width:720px){
+    .hero-grid{grid-template-columns:1fr;}
+  }
+  .triad{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+  }
+  .triad svg{width:100%; max-width:280px; height:auto;}
+  .triad-label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.7rem;
+    fill:var(--ink-muted);
+  }
+
+  /* ---------- stat strip ---------- */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:36px;
+  }
+  @media (max-width:640px){ .stats{grid-template-columns:repeat(2,1fr);} }
+  .stat{
+    background:var(--surface);
+    padding:16px 14px;
+  }
+  .stat .n{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:1.5rem;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .stat .l{
+    font-size:.78rem;
+    color:var(--ink-muted);
+    margin-top:3px;
+    line-height:1.4;
+  }
+
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--border);}
+  .section-head{margin-bottom:26px;}
+  .section-head .eyebrow{margin-bottom:8px;}
+  .section-head h2{font-size:1.45rem;}
+  .section-head p{color:var(--ink-muted); margin-top:10px; max-width:60ch; font-size:.98rem;}
+
+  /* ---------- demo chart ---------- */
+  .chart-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:.8rem;
+    font-family:inherit;
+    color:inherit;
+    padding:7px 11px 7px 9px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    -webkit-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    user-select:none;
+    transition:opacity .15s, border-color .15s;
+  }
+  .chip .dot{width:9px;height:9px;border-radius:2px;flex:none;}
+  .chip[data-off="true"]{opacity:.4;}
+
+  a:focus-visible,
+  .chip:focus-visible,
+  .case-head:focus-visible,
+  .cta:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+    border-radius:4px;
+  }
+
+  .bar-row{
+    display:grid;
+    grid-template-columns:96px 1fr 44px;
+    align-items:center;
+    gap:10px;
+    padding:8px 0;
+  }
+  .bar-row .name{font-size:.82rem; color:var(--ink-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .bar-track{
+    position:relative;
+    height:22px;
+    display:flex;
+    gap:2px;
+    background:var(--surface-2);
+    background-image:repeating-linear-gradient(to right, var(--border) 0, var(--border) 1px, transparent 1px, transparent 25%);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .seg{
+    flex:0 0 auto;
+    transition:opacity .15s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .seg .seg-label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.62rem;
+    font-weight:600;
+    color:rgba(255,255,255,.92);
+    pointer-events:none;
+    white-space:nowrap;
+  }
+  .bar-row .total{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.84rem;
+    font-weight:600;
+    text-align:right;
+  }
+  .axis{
+    display:grid;
+    grid-template-columns:96px 1fr 44px;
+    gap:10px;
+    margin-top:6px;
+    padding-top:6px;
+    border-top:1px dashed var(--border);
+  }
+  .axis .ticks{
+    display:flex; justify-content:space-between;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;
+    color:var(--ink-faint);
+  }
+  .chart-note{
+    margin-top:16px;
+    font-size:.8rem;
+    color:var(--ink-faint);
+    line-height:1.6;
+  }
+  .sr-only{
+    position:absolute;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+  .tooltip{
+    position:fixed;
+    pointer-events:none;
+    background:var(--ink);
+    color:var(--bg);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    padding:7px 9px;
+    border-radius:8px;
+    opacity:0;
+    transform:translate(-50%,-130%);
+    transition:opacity .1s;
+    z-index:30;
+    white-space:nowrap;
+  }
+  .tooltip.show{opacity:1;}
+
+  /* ---------- case cards ---------- */
+  .cases{display:flex; flex-direction:column; gap:12px;}
+  .case{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .case-head{
+    display:grid;
+    grid-template-columns:auto 1fr auto auto;
+    align-items:center;
+    gap:12px;
+    padding:18px;
+    cursor:pointer;
+    background:none;
+    border:none;
+    width:100%;
+    text-align:left;
+    color:var(--ink);
+    font-family:inherit;
+  }
+  .case-code{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;
+    font-weight:600;
+    color:var(--accent);
+    background:var(--surface-2);
+    padding:4px 8px;
+    border-radius:6px;
+    white-space:nowrap;
+  }
+  .case-title{min-width:0;}
+  .case-title .t{font-weight:600; font-size:1.02rem;}
+  .case-title .s{font-size:.85rem; color:var(--ink-muted); margin-top:3px; line-height:1.4; display:none;}
+  @media (min-width:560px){ .case-title .s{display:block;} }
+  .case-hook{ text-align:right; flex:none; }
+  .case-hook .n{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:1.08rem;
+    font-weight:700;
+    color:var(--accent);
+    line-height:1.1;
+    white-space:nowrap;
+  }
+  .case-hook .l{
+    font-size:.62rem;
+    color:var(--ink-faint);
+    margin-top:2px;
+    white-space:nowrap;
+  }
+  .chev{
+    width:18px;height:18px;flex:none;
+    color:var(--ink-faint);
+    transition:transform .2s;
+  }
+  .case[data-open="true"] .chev{transform:rotate(180deg);}
+  .case-body-outer{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .25s ease;
+  }
+  .case[data-open="true"] .case-body-outer{grid-template-rows:1fr;}
+  .case-body-inner{overflow:hidden;}
+  .case-body{
+    padding:0 18px 22px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px 26px;
+    border-top:1px solid var(--border);
+    padding-top:20px;
+    margin-top:2px;
+  }
+  @media (max-width:640px){ .case-body{grid-template-columns:1fr;} }
+  .case-body h4{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-faint);
+    margin:0 0 8px;
+  }
+  .case-body h4 svg{width:14px;height:14px;flex:none;color:var(--accent);}
+  .case-body p{font-size:.92rem; margin:0; color:var(--ink); line-height:1.65;}
+  .case-body .result{
+    grid-column:1/-1;
+    background:var(--surface-2);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .case-body .files{
+    grid-column:1/-1;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.76rem;
+    color:var(--ink-faint);
+    line-height:1.6;
+  }
+
+  /* ---------- mini stat row (per case) ---------- */
+  .case-stats{
+    grid-column:1/-1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .case-stat{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 14px;
+    min-width:120px;
+    flex:1 1 120px;
+  }
+  .case-stat .n{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:1.12rem;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .case-stat .l{
+    font-size:.74rem;
+    color:var(--ink-muted);
+    margin-top:3px;
+    line-height:1.4;
+  }
+
+  /* ---------- process stepper (DA-01) ---------- */
+  .stepper{
+    grid-column:1/-1;
+    display:flex;
+    align-items:flex-start;
+    overflow-x:auto;
+    padding:4px 2px 8px;
+  }
+  .stepper .step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:76px;
+    flex:1 0 auto;
+  }
+  .stepper .dot{
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--accent);
+    color:var(--accent-ink);
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .stepper .dot svg{width:15px;height:15px;}
+  .stepper .label{
+    margin-top:7px;
+    font-size:.7rem;
+    color:var(--ink-muted);
+    text-align:center;
+    line-height:1.35;
+    max-width:82px;
+  }
+  .stepper .line{
+    flex:1 1 auto;
+    height:2px;
+    background:var(--border);
+    margin-top:15px;
+    min-width:14px;
+  }
+
+  /* ---------- trio icon cards ---------- */
+  .trio{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:10px;
+  }
+  @media (max-width:640px){ .trio{grid-template-columns:1fr;} }
+  .trio-item{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 12px;
+    text-align:center;
+  }
+  .trio-item .ic{
+    width:28px; height:28px;
+    margin:0 auto 8px;
+    color:var(--accent);
+  }
+  .trio-item .t{font-weight:600; font-size:.86rem; margin-bottom:4px;}
+  .trio-item .d{font-size:.76rem; color:var(--ink-muted); line-height:1.4;}
+  .quad{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:6px;
+  }
+  @media (max-width:640px){ .quad{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- sprint mini visual (PM-01) ---------- */
+  .sprint{
+    grid-column:1/-1;
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:8px;
+  }
+  .sprint-row{ display:flex; align-items:center; }
+  .sprint-dot{
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--surface-2);
+    border:1.5px solid var(--accent);
+    color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.74rem; font-weight:700;
+    flex:none;
+  }
+  .sprint-line{ width:22px; height:2px; background:var(--border); }
+  .sprint-badge{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem; font-weight:700;
+    color:var(--accent-ink);
+    background:var(--accent);
+    padding:5px 12px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+
+  /* ---------- funnel (DA-02) ---------- */
+  .funnel{ grid-column:1/-1; display:flex; flex-direction:column; gap:7px; margin-bottom:10px; }
+  .funnel-row{ display:flex; align-items:center; gap:10px; }
+  .funnel-bar{
+    height:32px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    padding:0 12px;
+    font-size:.76rem;
+    font-weight:600;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .embed-frame{
+    grid-column:1/-1;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:2px;
+    box-shadow:var(--shadow);
+  }
+  .embed-frame iframe{
+    width:100%;
+    height:520px;
+    border:0;
+    display:block;
+    background:#fff;
+  }
+  .funnel-n{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:.8rem;
+    font-weight:700;
+    color:var(--ink-faint);
+    width:56px;
+    flex:none;
+    text-align:right;
+  }
+
+  footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));}
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:16px;
+  }
+  .footer-inner h3{font-size:1.15rem;}
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    text-decoration:none;
+    font-size:.85rem;
+    font-weight:600;
+    padding:11px 18px;
+    border-radius:999px;
+  }
+  .cta-group{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cta.outline{
+    background:none;
+    color:var(--ink);
+    border:1px solid var(--border);
+  }
+  .fineprint{
+    margin-top:28px;
+    font-size:.78rem;
+    color:var(--ink-faint);
+    border-top:1px solid var(--border);
+    padding-top:16px;
+    line-height:1.6;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition-duration:.001ms !important; animation-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none"><polygon points="12,3 21,19 3,19" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/></svg>
+      이보희 <span class="mono" style="color:var(--ink-faint); font-weight:400;">· 데이터 분석가</span>
+    </div>
+    <nav class="navlinks">
+      <a href="#hero">소개</a>
+      <a href="#demo">데모</a>
+      <a href="#cases">케이스 스터디</a>
+      <a href="#contact">연락</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">데이터 분석가 · 더선한(굿에이아이)</div>
+        <h1>제가 만든 프로그램, 지금도 회사에서 씁니다</h1>
+        <p class="sub">B2B 영업 AI PEAKRO에서, 고객 우선순위를 자동으로 알려주는 프로그램을 만들었어요. 분석은 화면 설계·데이터 정리로도 이어졌습니다.</p>
+      </div>
+      <div class="triad" aria-hidden="true">
+        <svg viewBox="0 0 220 200">
+          <polygon points="110,14 206,182 14,182" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+          <polygon points="110,55 174,166 46,166" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="110" cy="14" r="3.5" fill="var(--cat-1)"/>
+          <circle cx="206" cy="182" r="3.5" fill="var(--cat-2)"/>
+          <circle cx="14" cy="182" r="3.5" fill="var(--cat-3)"/>
+          <text x="110" y="4" text-anchor="middle" class="triad-label">기술 궁합</text>
+          <text x="216" y="196" text-anchor="end" class="triad-label">담당자 확인</text>
+          <text x="4" y="196" text-anchor="start" class="triad-label">업종 확인</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">1년+</div><div class="l">계속 사용 중인 프로그램</div></div>
+      <div class="stat"><div class="n">3가지</div><div class="l">기준으로 점수 매기기</div></div>
+      <div class="stat"><div class="n">8개</div><div class="l">그래프로 결과 공개</div></div>
+      <div class="stat"><div class="n">7회</div><div class="l">행사 혼자 기획·운영</div></div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="section-head">
+      <div class="eyebrow">DEMO</div>
+      <h2>점수는 이렇게 매겨요 (예시)</h2>
+      <p><b>기술 궁합 · 담당자 확인 · 업종 확인</b>, 3가지 점수를 더해요. 아래는 예시 데이터입니다. 색깔 버튼을 눌러 비교해보세요.</p>
+    </div>
+
+    <div class="chart-card">
+      <div class="legend" id="legend"></div>
+      <div id="bars"></div>
+      <div class="axis">
+        <div></div>
+        <div class="ticks"><span>0점</span><span>25점</span><span>50점</span><span>75점</span><span>100점</span></div>
+        <div></div>
+      </div>
+      <div class="chart-note">예시 고객 A~E · 실제 값이 아닌 가상의 점수로 계산 방식만 보여드려요.</div>
+    </div>
+
+    <table class="sr-only">
+      <caption>예시 고객별 점수 구성 (기술 궁합 · 담당자 확인 · 업종 확인 · 합계) — 위 그래프와 같은 내용의 표</caption>
+      <thead>
+        <tr><th scope="col">고객</th><th scope="col">기술 궁합</th><th scope="col">담당자 확인</th><th scope="col">업종 확인</th><th scope="col">합계</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">예시 고객 A</th><td>34</td><td>24</td><td>20</td><td>78</td></tr>
+        <tr><th scope="row">예시 고객 B</th><td>28</td><td>12</td><td>26</td><td>66</td></tr>
+        <tr><th scope="row">예시 고객 C</th><td>20</td><td>22</td><td>14</td><td>56</td></tr>
+        <tr><th scope="row">예시 고객 D</th><td>16</td><td>8</td><td>18</td><td>42</td></tr>
+        <tr><th scope="row">예시 고객 E</th><td>10</td><td>14</td><td>8</td><td>32</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="cases">
+    <div class="section-head">
+      <div class="eyebrow">PROJECTS</div>
+      <h2>케이스 스터디</h2>
+      <p>숫자만 봐도 감이 오게 정리했어요. 카드를 누르면 자세히 펼쳐집니다.</p>
+    </div>
+    <div class="cases" id="cases-list"></div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-inner">
+      <div>
+        <h3>더 보고 싶으시다면</h3>
+        <p style="color:var(--ink-muted); margin-top:6px; max-width:44ch;">경력 전체와 스킬은 리멤버 프로필에서 확인하실 수 있습니다.</p>
+      </div>
+      <div class="cta-group">
+        <a class="cta outline" href="mailto:lanialee95@gmail.com">
+          이메일 보내기
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+        <a class="cta" href="https://connect.rememberapp.co.kr/profile/3581321" target="_blank" rel="noopener">
+          리멤버에서 보기
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="fineprint">회사 비밀 정보를 지키기 위해, 방법과 결과만 정리했어요. 그래프도 예시 데이터입니다.</div>
+  </footer>
+</main>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+(function(){
+  var ICONS = {
+    target:'<circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="3.6"/><circle cx="10" cy="10" r="0.9" fill="currentColor" stroke="none"/>',
+    bulb:'<path d="M10 2.3a5.2 5.2 0 0 0-3 9.4c.7.5 1.1 1.2 1.1 2h3.8c0-.8.4-1.5 1.1-2a5.2 5.2 0 0 0-3-9.4Z"/><path d="M8.2 16.3h3.6M8.7 18h2.6"/>',
+    search:'<circle cx="8.8" cy="8.8" r="5.6"/><path d="M17 17l-3.6-3.6"/>',
+    refresh:'<path d="M4 10a6 6 0 0 1 10.4-4.1M16 10a6 6 0 0 1-10.4 4.1"/><path d="M14.4 2.3V6H10.7M5.6 17.7V14H9.3"/>',
+    flag:'<path d="M5 18V3"/><path d="M5 4h9l-2.4 3L14 10H5"/>',
+    chart:'<path d="M4 16.5V9M9.3 16.5V4M14.6 16.5v-6"/><path d="M3 17.3h14.6"/>',
+    puzzle:'<circle cx="7.6" cy="10" r="5.2"/><circle cx="12.4" cy="10" r="5.2"/>',
+    badge:'<circle cx="10" cy="6.8" r="3.1"/><path d="M4.3 17.5c0-3.4 2.5-6.1 5.7-6.1s5.7 2.7 5.7 6.1"/>',
+    building:'<rect x="5.2" y="2.8" width="9.6" height="14.4" rx="1"/><path d="M8 6.6h1M11 6.6h1M8 10h1M11 10h1M8 13.4h1M11 13.4h1"/>',
+    globe:'<circle cx="10" cy="10" r="7.2"/><path d="M2.8 10h14.4M10 2.8a10.6 10.6 0 0 1 0 14.4M10 2.8a10.6 10.6 0 0 0 0 14.4"/>',
+    doc:'<rect x="5.4" y="2.4" width="9.2" height="15.2" rx="1"/><path d="M7.6 7h4.8M7.6 10h4.8M7.6 13h3"/>',
+    clock:'<circle cx="10" cy="10" r="7.2"/><path d="M10 6v4l3 2"/>'
+  };
+  function icon(name){
+    return '<svg class="ic" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+ICONS[name]+'</svg>';
+  }
+
+  var CASES = [
+    {
+      code:"DA · 01",
+      title:"B2B 고객 추천 프로그램 설계",
+      summary:"3가지 기준으로 점수를 매기는 프로그램을 만들어 서비스 핵심 기능으로 채택",
+      hook:{n:"1년+", l:"계속 운영"},
+      stats:[
+        {n:"1년+", l:"계속 사용 중"},
+        {n:"3가지", l:"점수 기준"},
+        {n:"8개", l:"그래프로 결과 공개"}
+      ],
+      sections:[
+        {h:"문제 정의", icon:"target", p:"저는 'AI가 고객을 찾아주는' 첫 단계를 맡았어요. 영업팀은 감으로 순위를 정하고 있었죠. 자동 기준이 필요했습니다."},
+        {h:"가설 설정", icon:"bulb", p:"계약 가능성을 3가지 조건으로 나눴어요.",
+          visual:{type:"trio", items:[
+            {icon:"puzzle", t:"기술 궁합", d:"강점과 니즈가 맞는지"},
+            {icon:"badge", t:"담당자 확인", d:"결정권자가 있는지"},
+            {icon:"building", t:"업종 확인", d:"업종이 맞는지"}
+          ]}},
+        {h:"검증 과정", icon:"search", wide:true, p:"담당자 확인은 예산·직급 점수를 6:4로 합쳤어요. 업종 확인은 AI 분류를 직접 검수했어요.",
+          visual:{type:"splitbar", segs:[
+            {w:60, label:"예산 여력 60%", color:"var(--cat-1)"},
+            {w:40, label:"승인 난이도 40%", color:"var(--cat-2)"}
+          ]}},
+        {h:"추가 검증", icon:"refresh", wide:true, p:"배점과 비율을 데이터로 여러 번 조정했어요. 기준 12개는 문서로 남겼습니다."},
+        {h:"해결", icon:"flag", wide:true, highlight:true, p:"<b>1년 넘게 계속 쓰였습니다.</b> 이 인사이트는 화면 설계·TIPS 분석으로도 이어졌어요."},
+        {h:"시각화", icon:"chart", wide:true, p:"실제로 만든 그래프 8개 중 하나예요. 슬라이더를 움직여보세요.", embed:"viz/metrics-explorer.html"}
+      ],
+      process:true,
+      files:"만든 파일 — 계산 프로그램(노트북) 4개 · 결과를 보여주는 그래프 8개"
+    },
+    {
+      code:"DA · 02",
+      title:"TIPS 참가기업 데이터 분석",
+      summary:"빠진 사업자번호를 자동으로 채워 영업 후보를 확보",
+      hook:{n:"78.8%", l:"확정률"},
+      stats:[
+        {n:"4,004개", l:"기업 데이터 검토(2018~2025 선정분)"},
+        {n:"78.8%", l:"빠진 사업자번호 채움"},
+        {n:"700+", l:"영업 후보 확보"}
+      ],
+      sections:[
+        {h:"배경", icon:"target", p:"좋은 고객 목록 없인 소용없다고 판단했어요."},
+        {h:"역할", icon:"badge", p:"수집부터 DB화까지 혼자 했습니다."},
+        {h:"방법론", icon:"search", wide:true, p:"4,004개 기업 데이터를 확인했어요. 빠진 번호는 자동으로 채웠습니다.",
+          visual:{type:"funnel", bars:[
+            {w:100, n:"4,004", label:"기업 데이터 검토"},
+            {w:78.8, n:"78.8%", label:"사업자번호 확정(3,157개)"},
+            {w:17.5, n:"700+", label:"영업 후보 확보"}
+          ]}},
+        {h:"결과", icon:"flag", wide:true, highlight:true, p:"<b>78.8% 확정, 영업 후보 700개+</b>를 확보했어요."}
+      ],
+      files:"만든 파일 — 정리·분석 노트북 1개 · 통합 기업 표(엑셀) 2개"
+    },
+    {
+      code:"DA · 04",
+      title:"교육기관 데이터 자동 수집",
+      summary:"사람이 손으로 찾던 일을 자동화해 연락 가능한 고객 범위를 넓힘",
+      hook:{n:"2가지", l:"자동 수집 방식"},
+      stats:[
+        {n:"2가지", l:"자동 수집 방식(웹+공공 API)"},
+        {n:"3개", l:"정리된 데이터 파일"}
+      ],
+      sections:[
+        {h:"배경", icon:"target", p:"손으로 찾기엔 너무 오래 걸렸어요."},
+        {h:"역할", icon:"badge", p:"설계부터 정리까지 혼자 했습니다."},
+        {h:"방법론", icon:"refresh", wide:true, p:"3단계로 자동화했어요.",
+          visual:{type:"trio", items:[
+            {icon:"globe", t:"웹사이트 분석", d:"조직도 구조 파악"},
+            {icon:"refresh", t:"자동 수집", d:"Selenium+공공API"},
+            {icon:"doc", t:"정리된 표", d:"CSV 3개로 정제"}
+          ]}},
+        {h:"결과", icon:"flag", wide:true, highlight:true, p:"<b>연락 가능한 범위를 넓혔습니다.</b> 데이터를 직접 만들어내는 역량을 보여줬어요."}
+      ],
+      files:"만든 파일 — 자동 수집 노트북 3개 · 정리된 표(CSV) 3개"
+    },
+    {
+      code:"AI · 01",
+      title:"AI에게 질문하는 방법 설계",
+      summary:"영업 판단 기준을 AI 질문 설계에 반영해 일관된 결과를 만듦",
+      hook:{n:"12종", l:"기준 문서"},
+      stats:[
+        {n:"4가지", l:"영업 판단 기준 반영"},
+        {n:"12개", l:"기준 문서로 정리"}
+      ],
+      sections:[
+        {h:"배경", icon:"target", p:"일관된 AI 답변을 위한 기준이 필요했어요."},
+        {h:"역할", icon:"badge", p:"질문 설계와 문서화를 혼자 했습니다."},
+        {h:"방법론", icon:"doc", wide:true, p:"4가지 기준을 반영했어요.",
+          visual:{type:"quad", items:[
+            {icon:"bulb", t:"강점", d:"USP 분석"},
+            {icon:"clock", t:"타이밍", d:"연락 시점"},
+            {icon:"building", t:"규모", d:"기업 크기"},
+            {icon:"badge", t:"결정권자", d:"존재 여부"}
+          ]}},
+        {h:"결과", icon:"flag", wide:true, highlight:true, p:"<b>DA-01 업종 판단에 실제로 쓰여요.</b> 감이 아닌 기준으로 설계했습니다."}
+      ],
+      files:"만든 파일 — AI 질문 설계 기준 문서 12개(판단기준·평가방법·비용전략 등)"
+    },
+    {
+      code:"PM · 01",
+      title:"AI 화면 기획",
+      summary:"화면을 10번 넘게 고치며 대부분 실제 서비스로 출시",
+      hook:{n:"10회+", l:"반복 수정"},
+      stats:[
+        {n:"3번", l:"단계별로 반복"},
+        {n:"10회+", l:"수정하며 완성도 높임"}
+      ],
+      sections:[
+        {h:"배경", icon:"target", p:"화면이 불편하면 아무도 안 써요."},
+        {h:"역할", icon:"badge", p:"기획부터 전달까지 전담했습니다."},
+        {h:"방법론", icon:"refresh", wide:true, p:"스프린트마다 의견을 받아 고쳤어요.",
+          visual:{type:"sprint", steps:3, badge:"10회+ 수정"}},
+        {h:"결과", icon:"flag", wide:true, highlight:true, p:"<b>10번 넘게 고쳐 대부분 출시됐습니다.</b> 의도가 화면까지 이어졌어요."}
+      ],
+      files:"만든 파일 — 화면 기획서 최종본 1개 · 단계별 수정본 9개"
+    },
+    {
+      code:"AI · 02",
+      title:"나만의 AI 업무 자동화 도구",
+      summary:"Claude Agent SDK로 취업 준비용 커스텀 스킬 8종을 직접 제작",
+      hook:{n:"8종", l:"AI 스킬"},
+      stats:[
+        {n:"8종", l:"커스텀 스킬"},
+        {n:"100%", l:"단독 설계·제작"}
+      ],
+      sections:[
+        {h:"배경", icon:"target", p:"JD 분석·이력서·면접 준비·포트폴리오, 매번 새로 정리하기엔 비효율적이었어요."},
+        {h:"역할", icon:"badge", p:"AI 도구 설계와 제작을 혼자 했습니다."},
+        {h:"방법론", icon:"refresh", wide:true, p:"Claude Agent SDK로 4가지 핵심 기능을 만들었어요.",
+          visual:{type:"quad", items:[
+            {icon:"search", t:"JD 분석", d:"채용 공고 해독"},
+            {icon:"doc", t:"이력서", d:"자동 초안 작성"},
+            {icon:"bulb", t:"면접 준비", d:"예상 Q&A"},
+            {icon:"chart", t:"포트폴리오", d:"정리·시각화"}
+          ]}},
+        {h:"결과", icon:"flag", wide:true, highlight:true, p:"<b>지금 이 포트폴리오도 이 도구로 만들었어요.</b> AI 도구로 직접 업무 자동화를 만들 수 있다는 걸 보여준 프로젝트예요."}
+      ],
+      files:"만든 파일 — Claude Agent SDK 커스텀 스킬 8종"
+    }
+  ];
+
+  function renderVisual(v){
+    if(v.type === "trio" || v.type === "quad"){
+      var cls = v.type === "quad" ? "quad" : "trio";
+      return '<div class="'+cls+'">'+v.items.map(function(it){
+        return '<div class="trio-item">'+icon(it.icon)+'<div class="t">'+it.t+'</div><div class="d">'+it.d+'</div></div>';
+      }).join('')+'</div>';
+    }
+    if(v.type === "sprint"){
+      var row = '';
+      for(var i=1;i<=v.steps;i++){
+        row += '<div class="sprint-dot">'+i+'</div>';
+        if(i<v.steps) row += '<div class="sprint-line"></div>';
+      }
+      return '<div class="sprint"><div class="sprint-row">'+row+'</div><div class="sprint-badge">'+v.badge+'</div></div>';
+    }
+    if(v.type === "splitbar"){
+      return '<div class="bar-track" style="height:30px;margin-bottom:10px">'+v.segs.map(function(s){
+        return '<div class="seg" style="flex-basis:'+s.w+'%;background:'+s.color+'"><span class="seg-label">'+s.label+'</span></div>';
+      }).join('')+'</div>';
+    }
+    if(v.type === "funnel"){
+      return '<div class="funnel">'+v.bars.map(function(b){
+        return '<div class="funnel-row"><div class="funnel-n mono">'+b.n+'</div><div class="funnel-bar" style="width:'+b.w+'%">'+b.label+'</div></div>';
+      }).join('')+'</div>';
+    }
+    return '';
+  }
+
+  var list = document.getElementById('cases-list');
+  CASES.forEach(function(c, i){
+    var el = document.createElement('div');
+    el.className = 'case';
+    el.setAttribute('data-open', i===0 ? 'true' : 'false');
+    var bodyId = 'case-body-'+i;
+
+    var statsHtml = '<div class="case-stats">'+c.stats.map(function(s){
+      return '<div class="case-stat"><div class="n mono">'+s.n+'</div><div class="l">'+s.l+'</div></div>';
+    }).join('')+'</div>';
+
+    var stepperHtml = '';
+    if(c.process){
+      stepperHtml = '<div class="stepper" aria-hidden="true">'+c.sections.map(function(s, idx){
+        var step = '<div class="step"><div class="dot">'+icon(s.icon)+'</div><div class="label">'+s.h+'</div></div>';
+        return idx < c.sections.length-1 ? step + '<div class="line"></div>' : step;
+      }).join('')+'</div>';
+    }
+
+    var sectionsHtml = c.sections.map(function(s){
+      var style = s.wide ? ' style="grid-column:1/-1"' : '';
+      var cls = s.highlight ? ' class="result"' : '';
+      var visualHtml = s.visual ? renderVisual(s.visual) : '';
+      var iconHtml = s.icon ? icon(s.icon) : '';
+      var embedHtml = s.embed ? '<div class="embed-frame"><iframe src="'+s.embed+'" loading="lazy" title="인터랙티브 지표 시뮬레이터"></iframe></div>' : '';
+      return '<div'+cls+style+'><h4>'+iconHtml+s.h+'</h4>'+visualHtml+'<p>'+s.p+'</p>'+embedHtml+'</div>';
+    }).join('');
+
+    var hookHtml = c.hook ? '<div class="case-hook"><div class="n mono">'+c.hook.n+'</div><div class="l">'+c.hook.l+'</div></div>' : '';
+
+    el.innerHTML =
+      '<button class="case-head" aria-expanded="'+(i===0?'true':'false')+'" aria-controls="'+bodyId+'">'+
+        '<span class="case-code">'+c.code+'</span>'+
+        '<span class="case-title"><span class="t">'+c.title+'</span><span class="s">'+c.summary+'</span></span>'+
+        hookHtml+
+        '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>'+
+      '</button>'+
+      '<div class="case-body-outer" id="'+bodyId+'"><div class="case-body-inner"><div class="case-body">'+
+        statsHtml+
+        stepperHtml+
+        sectionsHtml+
+        '<div class="files">'+c.files+'</div>'+
+      '</div></div></div>';
+    list.appendChild(el);
+
+    el.querySelector('.case-head').addEventListener('click', function(){
+      var open = el.getAttribute('data-open') === 'true';
+      el.setAttribute('data-open', open ? 'false' : 'true');
+      this.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  // smooth scroll
+  document.querySelectorAll('.navlinks a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(this.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ---------- demo chart ----------
+  var CATS = [
+    {key:'tech', label:'기술 궁합', color:'var(--cat-1)'},
+    {key:'dm', label:'담당자 확인', color:'var(--cat-2)'},
+    {key:'ind', label:'업종 확인', color:'var(--cat-3)'}
+  ];
+  var LEADS = [
+    {name:'예시 고객 A', tech:34, dm:24, ind:20},
+    {name:'예시 고객 B', tech:28, dm:12, ind:26},
+    {name:'예시 고객 C', tech:20, dm:22, ind:14},
+    {name:'예시 고객 D', tech:16, dm:8,  ind:18},
+    {name:'예시 고객 E', tech:10, dm:14, ind:8}
+  ];
+  LEADS.sort(function(a,b){ return (b.tech+b.dm+b.ind)-(a.tech+a.dm+a.ind); });
+
+  var legend = document.getElementById('legend');
+  var offState = {};
+  CATS.forEach(function(c){
+    offState[c.key] = false;
+    var chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'chip';
+    chip.setAttribute('data-off','false');
+    chip.setAttribute('aria-pressed','true');
+    chip.innerHTML = '<span class="dot" style="background:'+c.color+'" aria-hidden="true"></span>'+c.label;
+    chip.addEventListener('click', function(){
+      offState[c.key] = !offState[c.key];
+      chip.setAttribute('data-off', offState[c.key] ? 'true':'false');
+      chip.setAttribute('aria-pressed', offState[c.key] ? 'false':'true');
+      renderBars();
+    });
+    legend.appendChild(chip);
+  });
+
+  var barsEl = document.getElementById('bars');
+  var tooltip = document.getElementById('tooltip');
+
+  function renderBars(){
+    barsEl.innerHTML = '';
+    var max = 100;
+    LEADS.forEach(function(lead){
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      var track = document.createElement('div');
+      track.className = 'bar-track';
+      CATS.forEach(function(c){
+        var v = offState[c.key] ? 0 : lead[c.key];
+        if(v <= 0) return;
+        var seg = document.createElement('div');
+        seg.className = 'seg';
+        var wPct = (v/max*100);
+        seg.style.flexBasis = wPct + '%';
+        seg.style.background = c.color;
+        if(wPct >= 14){
+          seg.innerHTML = '<span class="seg-label">'+v+'</span>';
+        }
+        seg.addEventListener('mousemove', function(e){
+          tooltip.textContent = c.label + ' · ' + v + '점';
+          tooltip.style.left = e.clientX + 'px';
+          tooltip.style.top = e.clientY + 'px';
+          tooltip.classList.add('show');
+        });
+        seg.addEventListener('mouseleave', function(){ tooltip.classList.remove('show'); });
+        track.appendChild(seg);
+      });
+      var total = CATS.reduce(function(s,c){ return s + (offState[c.key]?0:lead[c.key]); },0);
+      row.innerHTML = '<div class="name">'+lead.name+'</div>';
+      row.appendChild(track);
+      var totalEl = document.createElement('div');
+      totalEl.className = 'total mono';
+      totalEl.textContent = total+'점';
+      row.appendChild(totalEl);
+      barsEl.appendChild(row);
+    });
+  }
+  renderBars();
+})();
+</script>
+</body>
+</html>
